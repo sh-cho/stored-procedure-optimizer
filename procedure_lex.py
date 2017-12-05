@@ -12,11 +12,11 @@ tokens = reserved + (
     # variable-related tokens
     'ASSIGN', 'INTNUM', 'ID',
 
-    # procedure blocks
-    # 'PROCEDURE_BLOCK_LIST', 'PROCEDURE_BLOCK', 'BLOCK_DEPTH', 'PROCEDURE_BLOCK_BODY',
-    # 'LOOP_BLOCK', 'LOOP_BLOCK_INFO',
-    # 'STATEMENT_BLOCK', 'STATEMENT', 'STATEMENT_IO_TYPE', 'STATEMENT_BODY',
-    # 'CONDITION_BLOCK', 'COND_INFO'
+    # condition operators (<, <=, >, >=, ==, !=)
+    'LT', 'LE', 'GT', 'GE', 'EQ', 'NE'
+
+    # sql
+    'SELECT_QUERY', 'INSERT_QUERY'
 )
 
 # ignored chars
@@ -26,11 +26,19 @@ def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
 
-
-
 t_ASSIGN = r':='
 t_INTNUM = r'\d+'
 t_ID = r'[a-zA-Z_][a-zA-Z0-9_]*'
+
+t_LT = r'<'
+t_GT = r'>'
+t_LE = r'<='
+t_GE = r'>='
+t_EQ = r'=='
+t_NE = r'!='
+
+t_SELECT_QUERY = r'(?i)select (.*) from (.*)( where (.*))?'
+t_INSERT_QUERY = r'(?i)insert into (.*) \([a-zA-Z_](,[a-zA-Z_])*\) values \(.*(,.*)*\)'
 
 
 
